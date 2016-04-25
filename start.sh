@@ -22,5 +22,9 @@ if [ "$(ls -A /proxy/config/nginx.conf)"]; then
   echo "Adding your nginx.conf file"
   rm /etc/nginx/nginx.conf
   ln -s /proxy/config/nginx.conf /etc/nginx/nginx.conf
+else
+  echo "Standard nginx.conf will be used"
+fi
+
 echo "Starting Nginx"
 nginx -g 'daemon off;'
