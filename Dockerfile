@@ -4,8 +4,9 @@ FROM nginx
 
 MAINTAINER Adam Pyle <admpyle@gmail.com>
 
+VOLUME /proxy
 # ENV variables/ can be overridden
-ENV LOG_DIR=/gluster/vol1/proxy
+ENV LOG_DIR=/proxy/logs
 ENV ERR_LOG_TYPE=warn
 
 # Remove any default configuration
