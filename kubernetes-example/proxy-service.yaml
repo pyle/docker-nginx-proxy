@@ -1,6 +1,8 @@
 # filename: proxy-service.yaml
 # purpose: tell kubernetes how to spin up the service
-# instructions: requies proxy-rpl.yaml replication controller to function fully.
+# instructions: requires proxy-rpl.yaml replication controller to function fully.
+#   This file sets up the front end endpoint in which clients can access from
+#   their machines.
 kind: Service
 apiVersion: v1
 metadata:
