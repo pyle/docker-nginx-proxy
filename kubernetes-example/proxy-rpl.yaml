@@ -1,0 +1,45 @@
+# filename: proxy-rpl.yaml
+# purpose: tell kubernetes how to spin up the replication controller
+# instructions: pulls the metadata labels have to match the service labels
+# notes: To mount a volume you'll need the folder on the host. Alternatively
+#   you can use any volumeMounts you like, aslong as it's defined correctly.
+#   The only that that needs to stay the same is the containers volumeMount
+#   path `/proxy`, so that the docker container can read the additional config.
+kind: ReplicationController
+apiVersion: v1
+metadata:
+  name: nginx-proxy
+  labels:
+    name: nginx
+    role: proxy
+spec:
+  replicas: 3
+  selector:
+    name: nginx
+    role: proxy
+  template:
+    metadata:
+      name: nginx-proxy
+      labels:
+        name: nginx
+        role: proxy
+    spec:
+      containers:
+      - name: nginx-proxy
+        image: pyle/docker-nginx-proxy:latest
+        ports:
+        - name: ssl-proxy-http
+          containerPort: 80
+          hostPort: 80
+        - name: ssl-proxy-https
+          containerPort: 443
+          hostPort: 443
+        volumeMounts:
+          -
+            mountPath: /proxy
+            name: proxy
+      volumes:
+        -
+          name: proxy
+          hostPath:
+            path: /gluster/vol1/proxy/
