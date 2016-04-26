@@ -1,0 +1,26 @@
+# filename: proxy-service.yaml
+# purpose: tell kubernetes how to spin up the service
+# instructions: requies proxy-rpl.yaml replication controller to function fully.
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-proxy
+  labels:
+    name: nginx
+    role: proxy
+spec:
+  ports:
+    - name: https
+      port: 443
+      targetPort: ssl-proxy-https
+      protocol: TCP
+
+    - name: http
+      port: 80
+      targetPort: ssl-proxy-http
+      protocol: TCP
+
+  selector:
+    name: nginx
+    role: proxy
+  type: LoadBalancer
